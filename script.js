@@ -2,15 +2,20 @@
 var generateBtn = document.querySelector("#generate");
 
 //Clobal Variable for writePassword Function//
-var passLength = '';
-var numberConfirm = '';
-var characterConfirm = '';
+var passLength;
+var upperCase;
+var lowerCase;
+var numberConfirm;
+var characterConfirm;
+var newArray;
 
 
 //Arrays for password selection//
     
     //upper and lowe case characters//
-    var characterUplow = ['a','b','c','d','e','f','g','h','i','j','k','k','l','m','n','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    var characterUp =['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+    
+    var characterlow = ['a','b','c','d','e','f','g','h','i','j','k','k','l','m','n','n','o','p','q','r','s','t','u','v','w','x','y','z'];
     
     //numeric characters//
     var numeric = [0,1,2,3,4,5,6,7,8,9];
@@ -19,7 +24,7 @@ var characterConfirm = '';
     var specialCharacter = ['\~','\!','\@','\$','\%','\^','\&','\*','\=','\+'];
 
             //Checks that arrays are working//
-            console.log(characterUplow);
+           
             console.log(numeric);
             console.log(specialCharacter);
 
@@ -29,7 +34,7 @@ var characterConfirm = '';
 function lengthInput (){
     
     //Prompts User for Password Length
-    var x = window.prompt('Your password can contain between 8-128 characters: How long do you want your password?', '8-128');
+    var x =window.prompt('Your password can contain between 8-128 characters: How long do you want your password?', '8-128');
     //Turns Password Length from String to Num//
     pL = parseInt(x);
 
@@ -39,7 +44,7 @@ function lengthInput (){
     //Verifying parameters of password length//
 
     if(pL >= 8 || pL >= 128){
-             
+            
             console.log(pL);
             console.log(typeof pL);
             passLength = pL;
@@ -53,11 +58,41 @@ function lengthInput (){
 }
 
 
+function CapsChar(){
+
+    var n =confirm("Would you like upper case characters in your password?");
+
+    console.log(n);
+    console.log(typeof n);
+
+    upperCase= n;
+
+    console.log(numberConfirm);
+    console.log(typeof numberConfirm);
+
+
+}
+
+function LowChar(){
+
+    var n = confirm("Would you like lower case characters in your password?");
+
+    console.log(n);
+    console.log(typeof n);
+
+    lowerCase= n;
+
+
+
+}
+
+
+
 //Numbers in Password Function//
 
 function numberInclude(){
 
-    var n =window.confirm("Would you like to include numbers in your password?");
+    var n =confirm("Would you like to include numbers in your password?");
 
     console.log(n);
     console.log(typeof n);
@@ -74,7 +109,7 @@ function numberInclude(){
 //Special Characters in Password Function//
 function characterInclude(){
 
-    var s =window.confirm("Would you like to include special characters in your password?");
+    var s =confirm("Would you like to include special characters in your password?");
 
     console.log(s);
     console.log(typeof s);
@@ -90,19 +125,55 @@ function characterInclude(){
 
 // Write password to the #password input//
 
-function writePassword(event) {
-    event.preventDefault();
+function userPasswordOptions() {
+    // event.preventDefault();
 
     //Length of Password//
      lengthInput();
+     console.log(passLength);
+     CapsChar();
+
+     LowChar();
     //Number Included or Not//
      numberInclude();
+     console.log(numberConfirm);
     //Special Char. Included or Not//
     characterInclude();
+    console.log(characterConfirm);
+
+    var passwordOptions = {
+        length: passLength,
+        numbers: numberConfirm,
+        specialChars: characterConfirm,
+        upperCase: upperCase,
+        lowerCase: lowerCase
+    }
+
+    //if statement needs to check if all variables are false 
+
+    if(numberConfirm == true && characterConfirm ==true){
+        //perform funtion//
+        console.log("number is true, character is true");
+        
+    }else if (numberConfirm ==true && characterConfirm == false){
+        //perform function//
+        newArray = characterUplow[Math.floor(Math.random() * characterUplow.length)];
+        console.log(newArray);
+
+        console.log("number is true, character is false");
+
+    }else if (numberConfirm ==false && characterConfirm == true){
+
+        //perform function//
+        console.log("number is false, character is true");
+    }
+
+    return passwordOptions;
+
            
             
 
-  var password = generatePassword();
+//   
 
     //I want to produce a password//
 
@@ -115,10 +186,47 @@ function writePassword(event) {
     //I want to take the new array and print text into aria-label box//
 
 
+
+}
+
+function generatePassword(){
+
+    var userOptions = userPasswordOptions();
+
+    //create an empty array to store password results
+    var finalPass = [];
+
+    var chosenChars = [];
+
+    if(userOptions.numbers){
+        chosenChars.push(random(numeric))
+    }
+
+    if(userOptions.specialChars){
+        chosenChars.push(random(specialCharacter))
+    }
+    console.log(chosenChars);
+
+    //add if statements for upper case and lower case chars
+
+    //then loop through the userOptions.legnth
+
+    //in the loop we need to randomize the chosenChars array and push them into the final pass array
+
+    //last we need to return the final pass array and convert into a string **google how to turn an array into a string with javascript
+}
+
+function writePassword(){
+  var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
 
+}
+
+function random(a){
+    var b = Math.floor(Math.random() * a.length);
+    return a[b];
 }
 
 // Add event listener to generate button
