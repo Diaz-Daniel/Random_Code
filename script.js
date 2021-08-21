@@ -8,6 +8,7 @@ var lowerCase;
 var numberConfirm;
 var characterConfirm;
 var newArray;
+var length;
 
 
 //Arrays for password selection//
@@ -15,7 +16,7 @@ var newArray;
     //upper and lowe case characters//
     var characterUp =['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     
-    var characterlow = ['a','b','c','d','e','f','g','h','i','j','k','k','l','m','n','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+    var characterLow = ['a','b','c','d','e','f','g','h','i','j','k','k','l','m','n','n','o','p','q','r','s','t','u','v','w','x','y','z'];
     
     //numeric characters//
     var numeric = [0,1,2,3,4,5,6,7,8,9];
@@ -54,11 +55,14 @@ function lengthInput (){
 
     }else if (pL < 8 || pL > 128){
         alert("You need to choose a number between 8-128. Press Generate passwork again to try again");
+        return;
     }
 }
 
 
 function CapsChar(){
+
+    if (passLength >= 8 || passLength <= 128){
 
     var n =confirm("Would you like upper case characters in your password?");
 
@@ -67,31 +71,34 @@ function CapsChar(){
 
     upperCase= n;
 
-    console.log(numberConfirm);
-    console.log(typeof numberConfirm);
+    console.log(upperCase);
+    console.log(typeof upperCase);
+    }else{
 
+    }
+    return;
 
 }
 
 function LowChar(){
-
+    if (passLength >= 8 || passLength <= 128){
     var n = confirm("Would you like lower case characters in your password?");
 
     console.log(n);
     console.log(typeof n);
 
     lowerCase= n;
+    }else{
 
-
-
+    }
+    return;
 }
-
 
 
 //Numbers in Password Function//
 
 function numberInclude(){
-
+    if (passLength >= 8 || passLength <= 128){
     var n =confirm("Would you like to include numbers in your password?");
 
     console.log(n);
@@ -101,14 +108,16 @@ function numberInclude(){
 
     console.log(numberConfirm);
     console.log(typeof numberConfirm);
+    }else{
 
+    }return;
 
 }
 
 
 //Special Characters in Password Function//
 function characterInclude(){
-
+    if (passLength >= 8 || passLength <= 128){
     var s =confirm("Would you like to include special characters in your password?");
 
     console.log(s);
@@ -118,7 +127,9 @@ function characterInclude(){
 
     console.log(characterConfirm);
     console.log(typeof characterConfirm);
+    }else{
 
+    }return;
 
 }
 
@@ -150,66 +161,65 @@ function userPasswordOptions() {
     }
 
     //if statement needs to check if all variables are false 
-
-    if(numberConfirm == true && characterConfirm ==true){
-        //perform funtion//
-        console.log("number is true, character is true");
-        
-    }else if (numberConfirm ==true && characterConfirm == false){
-        //perform function//
-        newArray = characterUplow[Math.floor(Math.random() * characterUplow.length)];
-        console.log(newArray);
-
-        console.log("number is true, character is false");
-
-    }else if (numberConfirm ==false && characterConfirm == true){
-
-        //perform function//
-        console.log("number is false, character is true");
-    }
+    if (numberConfirm == false && characterConfirm == false && characterConfirm == false && upperCase == false && lowerCase == false){
+        alert("You must choose at least one of the specified options to receive a password");
+     }
 
     return passwordOptions;
-
-           
-            
-
-//   
-
-    //I want to produce a password//
-
-    //I want to identify arrays to be used//
-
-    //I want to select at random one item from each array and put them into a new array//
-
-    //I want to then select a item from each specified array and push them into new array 'n' times until new array is equal to passLength//
-
-    //I want to take the new array and print text into aria-label box//
-
-
 
 }
 
 function generatePassword(){
 
     var userOptions = userPasswordOptions();
-
     //create an empty array to store password results
     var finalPass = [];
 
     var chosenChars = [];
+    var selectedArray = [];
 
-    if(userOptions.numbers){
-        chosenChars.push(random(numeric))
-    }
+    //input one of each selected password item//
+    console.log(userOptions.length);
 
-    if(userOptions.specialChars){
-        chosenChars.push(random(specialCharacter))
-    }
-    console.log(chosenChars);
+    do{
+            
+            if(userOptions.numbers){
+                if (chosenChars.length < userOptions.length){
+                chosenChars.push(random(numeric));
+            }
+            }
 
-    //add if statements for upper case and lower case chars
+            if(userOptions.specialChars){
+                if (chosenChars.length < userOptions.length){
+                chosenChars.push(random(specialCharacter));
+                }
+            }
+      
 
-    //then loop through the userOptions.legnth
+            if(userOptions.upperCase){
+                if(chosenChars.length < userOptions.length){
+
+                chosenChars.push(random(characterUp));
+                }
+            }
+
+            if(userOptions.lowerCase){
+                if (chosenChars.length < userOptions.length){
+
+                chosenChars.push(random(characterLow))
+                }
+            }
+        }while(chosenChars.length < userOptions.length);
+            console.log(chosenChars);
+
+
+
+
+    // var finalPass = userOptions;
+
+    // console.log(finalPass);
+    
+    //then loop through the userOptions.length
 
     //in the loop we need to randomize the chosenChars array and push them into the final pass array
 
