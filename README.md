@@ -18,3 +18,13 @@ This project is an introduction to generating a random password only through Jav
 - User must confirm whether to include lowercase,uppercase,numeric and/or special characters,
 - Information is validated and password is generated matching selected criteria,
 - Password is displayed in an alert or written on to the page
+
+## Technologies Used
+
+- HTML
+- CSS
+- Javascript
+
+## Link to Website
+
+- [Random_Code.com](https://diaz-daniel.github.io/Random_Code/)
